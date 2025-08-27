@@ -1,0 +1,20 @@
+<?php
+$host = "mysql-2be3406d-spacegostore-e94f.i.aivencloud.com";
+$user = "avnadmin";
+$pass = "AVNS_IDO3txk_7asprgUvS_S";
+$db = "banco_mysql";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if($conn->connect_error) { die("Erro: " . $conn->connect_error); }
+
+$numero = $_POST['numero'];
+$pacote = $_POST['pacote'];
+$titulo = $_POST['titulo'];
+$texto = $_POST['texto'];
+
+$stmt = $conn->prepare("INSERT INTO notificacoes (numero, pacote, titulo, texto, data_hora) VALUES (?, ?, ?, ?, NOW())");
+$stmt->bind_param("ssss", $numero, $pacote, $titulo, $texto);
+$stmt->execute();
+$stmt->close();
+$conn->close();
+?>
